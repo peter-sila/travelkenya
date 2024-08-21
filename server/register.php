@@ -2,7 +2,7 @@
 
 session_start();
 
-require '../connect/db_connect.php';
+require 'connect/db_connect.php';
 
 if (isset($_POST['register'])) {
     $username = $_POST['username'];

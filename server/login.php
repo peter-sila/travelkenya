@@ -2,7 +2,7 @@
 
 session_start();
 
-require '../connect/db_connect.php';
+require 'connect/db_connect.php';
 
 if (isset($_GET['login'])) {
     $username = $_GET['username'];
