@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+}
+
+.site-header {
+  background: #003366;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.site-header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.news-container {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.news-container h1 {
+  text-align: center;
+  color: #003366;
+  margin-bottom: 30px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.news-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #003366;
+}
+
+.card-content h2 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-content p {
+  color: #444;
+  margin-top: 10px;
+}
+
+.site-footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}

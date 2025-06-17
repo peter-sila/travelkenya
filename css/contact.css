@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.site-header {
+  background: #003366;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.site-header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.contact-container {
+  max-width: 600px;
+  background: white;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.contact-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #003366;
+}
+
+form label {
+  display: block;
+  margin: 15px 0 5px;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+
+form button {
+  background: #003366;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #0055aa;
+}
+
+#formStatus {
+  margin-top: 15px;
+  color: green;
+}
+
+.site-footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+}
