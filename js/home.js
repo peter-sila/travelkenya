@@ -21,3 +21,8 @@ fetch('static/footer.html')
   .then(data => {
     document.getElementById('footer').innerHTML = data;
   });
+
+function toggleFavorite(el) {
+  el.classList.toggle("active");
+  el.textContent = el.classList.contains("active") ? "❤️" : "♡";
+}

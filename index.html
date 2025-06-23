@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Destination Makueni</title>
+    <title>Destination Kenya</title>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="static/css/header.css">
     <link rel="stylesheet" href="static/css/footer.css">
@@ -12,8 +12,8 @@
     <div id="header"></div>
     <section class="hero">
         <div class="hero-text">
-            <h1>Tembea Makueni</h1>
-            <p>Welcome to Destination Makueni - Uncover Nature's Pulse and the Pinnacle of Hospitality</p>
+            <h1>Tembea Kenya</h1>
+            <p>Welcome to Destination Kenya - Uncover Nature's Pulse and the Best of Hospitality</p>
         </div>
         <div class="search-bar">
             <div class="tabs">
@@ -36,24 +36,69 @@
         <p>Book with us and unlock unbeatable discounts!</p>
         <div class="carousel">
             <div class="card">
-                <img src="assets/karu.jpg" alt="Casa Kalimbini Resort">
-                <h3>Casa Kalimbini Resort</h3>
-                <p>from KSh 5,500 /night</p>
+                <img src="assets/bari.jpg" alt="F&S Resort">
+                <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                <div class="card-body">
+                    <div class="title">F&S Resort</div>
+                    <div class="location">Machakos</div>
+                    <div class="stars"><span>3.5/5 Excellent</span> • <span class="rating">1 Review</span></div>
+                    <div class="info">
+                        <span></span>
+                        <span class="price">from KSh 1,500 /night</span>
+                    </div>
+                </div>
             </div>
             <div class="card">
-                <img src="assets/bari.jpg" alt="Jambo Afrika Getaway">
-                <h3>Jambo Afrika Getaway</h3>
-                <p>from KSh 2,500 /night</p>
+                <img src="assets/karu.jpg" alt="King's Resort">
+                <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                <div class="card-body">
+                    <div class="title">King's Resort</div>
+                    <div class="location">Malindi</div>
+                    <div class="stars"><span>5.0/5 Excellent</span> • <span class="rating">1 Review</span></div>
+                    <div class="info">
+                        <span></span>
+                        <span class="price">from KSh 4,000 /night</span>
+                    </div>
+                </div>
             </div>
             <div class="card">
-                <img src="assets/mara.jpg" alt="Kambua Resort">
-                <h3>Kambua Resort</h3>
-                <p>from KSh 2,000 /night</p>
+                <img src="assets/naiv.jpg" alt="Mara Resort">
+                <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                <div class="card-body">
+                    <div class="title">Mara Resort</div>
+                    <div class="location">Maasai Mara</div>
+                    <div class="stars"><span>4.5/5 Excellent</span> • <span class="rating">1 Review</span></div>
+                    <div class="info">
+                        <span></span>
+                        <span class="price">from KSh 3,000 /night</span>
+                    </div>
+                </div>
             </div>
             <div class="card">
-                <img src="assets/njaro.jpg" alt="Kilimani Breeze Hotel">
-                <h3>Kilimani Breeze Hotel</h3>
-                <p>from KSh 3,500 /night</p>
+                <img src="assets/njaro.jpg" alt="Prince Hotel">
+                <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                <div class="card-body">
+                    <div class="title">Prince Hotel</div>
+                    <div class="location">Nairobi</div>
+                    <div class="stars"><span>3.0/5 Excellent</span> • <span class="rating">1 Review</span></div>
+                    <div class="info">
+                        <span></span>
+                        <span class="price">from KSh 1,000 /night</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/samb.jpg" alt="Nexa Resort">
+                <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                <div class="card-body">
+                    <div class="title">Nexa Resort</div>
+                    <div class="location">Mbooni Hills</div>
+                    <div class="stars"><span>4.0/5 Excellent</span> • <span class="rating">1 Review</span></div>
+                    <div class="info">
+                        <span></span>
+                        <span class="price">from KSh 2,000 /night</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -63,16 +108,111 @@
         <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Tours!</p>
         <div class="carousel">
             <div class="card">
-                <img src="assets/s_walk.jpg" alt="Tour 1">
-                <h3>Tour 1</h3>
+                <img src="assets/bari.jpg" alt="MT KENYA">
+                <div class="card-body">
+                    <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                    <div class="location">Mt Kenya</div>
+                    <div class="title">1 DAY MT KENYA HIKING</div>
+                    <div class="stars">★★★★★<span class="review">0 Review</span></div>
+                    <div class="info">
+                        <span>⏱ 9H</span>
+                        <span class="price">⚡ from KSh 3,000</span>
+                    </div>
+                </div>
             </div>
             <div class="card">
-                <img src="assets/samb.jpg" alt="Tour 2">
-                <h3>Tour 2</h3>
+                <img src="assets/mara.jpg" alt="NAIROBI NATIONAL PARK">
+                <div class="card-body">
+                    <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                    <div class="location">Nairobi</div>
+                    <div class="title">1 DAY NAIROBI NATIONAL PARK</div>
+                    <div class="stars">★★★★★<span class="review">0 Review</span></div>
+                    <div class="info">
+                        <span>⏱ 9H</span>
+                        <span class="price">⚡ from KSh 3,000</span>
+                    </div>
+                </div>
             </div>
             <div class="card">
-                <img src="assets/sand_dunes.jpg" alt="Tour 3">
-                <h3>Tour 3</h3>
+                <img src="assets/sand_dunes.jpg" alt="MAASAI MARA">
+                <div class="card-body">
+                    <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                    <div class="location">Maasai Mara</div>
+                    <div class="title">1 DAY MAASAI MARA TOUR</div>
+                    <div class="stars">★★★★★<span class="review">0 Review</span></div>
+                    <div class="info">
+                        <span>⏱ 9H</span>
+                        <span class="price">⚡ from KSh 3,000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/sava.jpg" alt="MAASAI MARA">
+                <div class="card-body">
+                    <div class="favorite" onclick="toggleFavorite(this)">♡</div>
+                    <div class="location">Maasai Mara</div>
+                    <div class="title">1 DAY MAASAI MARA HIKING</div>
+                    <div class="stars">★★★★★<span class="review">0 Review</span></div>
+                    <div class="info">
+                        <span>⏱ 9H</span>
+                        <span class="price">⚡ from KSh 3,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <h2>Top Places</h2>
+        <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Places!</p>
+        <div class="carousel">
+            <div class="card highlight-card">
+                <img src="assets/wow.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
+            </div>
+            <div class="card highlight-card">
+                <img src="assets/w_fall.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
+            </div>
+            <div class="card highlight-card">
+                <img src="assets/sand_dunes.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
+            </div>
+            <div class="card highlight-card">
+                <img src="assets/s_walk.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
+            </div>
+            <div class="card highlight-card">
+                <img src="assets/pwan.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
+            </div>
+            <div class="card highlight-card">
+                <img src="assets/njaro.jpg" alt="Traditional Dancers">
+                <div class="card-body">
+                    <div class="highlight-tag">Celebrating Culture Through Movement</div>
+                    <h3>Traditional Dancers</h3>
+                    <p>The traditional dancers of Makueni are a testament to the region's rich cultural heritage and communal spirit.</p>
+                </div>
             </div>
         </div>
     </section>
