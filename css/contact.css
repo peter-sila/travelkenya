@@ -83,3 +83,49 @@ form button:hover {
   padding: 15px;
   margin-top: 30px;
 }
+
+@media (max-width: 900px) {
+  .contact-container {
+    max-width: 90%;
+    padding: 20px;
+  }
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+  .site-header nav ul {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-container {
+    padding: 15px;
+  }
+  .site-header {
+    padding: 10px;
+  }
+  .site-header .logo {
+    font-size: 1rem;
+  }
+  .site-header nav ul {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@media (max-width: 378px) {
+  .contact-container {
+    padding: 8px;
+  }
+  .site-header {
+    padding: 6px;
+  }
+  .site-footer {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}

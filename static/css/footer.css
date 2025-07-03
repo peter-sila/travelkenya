@@ -10,4 +10,34 @@ footer p {
    margin: 0;
    font-size: 14px;
    text-align: center;
+   line-height: 1.5;
+}
+@media (max-width: 900px) {
+   footer {
+      height: 60px;
+      padding: 12px 0;
+   }
+   footer p {
+      font-size: 13px;
+   }
+}
+
+@media (max-width: 600px) {
+   footer {
+      height: 50px;
+      padding: 10px 0;
+   }
+   footer p {
+      font-size: 12px;
+   }
+}
+
+@media (max-width: 378px) {
+   footer {
+      height: 40px;
+      padding: 8px 0;
+   }
+   footer p {
+      font-size: 11px;
+   }
 }

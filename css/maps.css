@@ -59,3 +59,51 @@ body {
   padding: 15px;
   margin-top: 40px;
 }
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .map-container {
+    max-width: 100%;
+  }
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 15px;
+  }
+  .site-header nav ul {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .map-section {
+    padding: 25px 8px;
+  }
+  .site-header {
+    padding: 10px 8px;
+  }
+  .site-header nav ul {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .map-container {
+    border-width: 2px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 378px) {
+  .site-header .logo {
+    font-size: 1rem;
+  }
+  .map-section h1 {
+    font-size: 1.1rem;
+  }
+  .site-footer {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}

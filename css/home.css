@@ -217,3 +217,63 @@ body {
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 70px 10px 30px;
+  }
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+  .carousel {
+    gap: 12px;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 40px 5px 20px;
+  }
+  .hero-text h1 {
+    font-size: 1.4rem;
+  }
+  .search-bar {
+    padding: 10px;
+    max-width: 98vw;
+  }
+  .search-fields {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .carousel {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .card img {
+    height: 140px;
+  }
+}
+
+@media (max-width: 378px) {
+  .hero-text h1 {
+    font-size: 1.1rem;
+  }
+  .featured h2 {
+    font-size: 1.1rem;
+  }
+  .card-body {
+    padding: 0.5rem;
+  }
+  .highlight-card .card-body {
+    padding: 0.7rem;
+  }
+}

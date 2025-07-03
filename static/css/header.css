@@ -44,3 +44,91 @@ body {
 .nav-links li a:hover {
   color: #0077cc;
 }
+.nav-links li a.active {
+  color: #0077cc;
+  font-weight: bold;
+}
+@media (max-width: 900px) {
+  .top-bar,
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+  }
+  .logo img {
+    height: 60px;
+    width: 130px;
+    padding: 4px;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    padding: 0;
+  }
+  .nav-links li {
+    width: 100%;
+  }
+  .nav-links li a {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-bar,
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+  .logo img {
+    height: 45px;
+    width: 100px;
+    padding: 2px;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 0;
+  }
+  .nav-links li {
+    width: 100%;
+  }
+  .nav-links li a {
+    display: block;
+    width: 100%;
+    padding: 7px 0;
+  }
+}
+
+@media (max-width: 378px) {
+  .top-bar,
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6px;
+  }
+  .logo img {
+    height: 30px;
+    width: 70px;
+    padding: 1px;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    padding: 0;
+  }
+  .nav-links li {
+    width: 100%;
+  }
+  .nav-links li a {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 0.9rem;
+  }
+}

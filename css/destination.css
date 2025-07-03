@@ -177,3 +177,60 @@ body {
   padding: 15px;
   margin-top: 30px;
 }
+
+@media (max-width: 900px) {
+  .content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .filters,
+  .tour-list {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+  }
+  .site-header nav ul {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+  }
+  .search-section {
+    padding: 20px 10px;
+  }
+  .content {
+    padding: 10px;
+    gap: 15px;
+  }
+  .filters,
+  .tour-list {
+    padding: 10px;
+  }
+  .tour-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 378px) {
+  .site-header {
+    padding: 5px 5px;
+  }
+  .search-section {
+    padding: 10px 2px;
+    font-size: 0.95rem;
+  }
+  .filters,
+  .tour-list {
+    padding: 5px;
+  }
+  .card img,
+  .tour-card img {
+    height: 100px;
+  }
+}
