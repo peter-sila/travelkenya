@@ -51,7 +51,7 @@ body {
 @media (max-width: 900px) {
   .top-bar,
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     padding: 12px;
   }
@@ -61,7 +61,7 @@ body {
     padding: 4px;
   }
   .nav-links {
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     width: 100%;
     padding: 0;
@@ -79,7 +79,7 @@ body {
 @media (max-width: 600px) {
   .top-bar,
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     padding: 10px;
   }
@@ -107,7 +107,7 @@ body {
 @media (max-width: 378px) {
   .top-bar,
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     padding: 6px;
   }
