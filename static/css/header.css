@@ -13,6 +13,34 @@ body {
   font-size: 0.9rem;
 }
 
+.top-bar .contact-info {
+  flex: 1;
+}
+
+.top-bar .auth-links {
+  display: flex;
+  gap: 15px;
+}
+
+.top-bar .auth-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.top-bar .auth-links a:hover {
+  color: #0077cc;
+}
+
+.top-bar .auth-links span {
+  color: #fff;
+  margin-right: 10px;
+}
+
+.top-bar .auth-links a {
+  font-weight: normal;
+}
+
 .navbar {
   margin: 0;
   background: #fff;
