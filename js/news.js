@@ -13,6 +13,8 @@ fetch("backend_php/news.php")
 
     data.forEach(news => {
       const card = document.createElement("div");
+      const titlebreadcrumb = document.getElementById("news-title-breadcrumb");
+      titlebreadcrumb.innerText = news.title;
       card.className = "news-card";
       card.innerHTML = `
         <img src="assets/news/${news.image}" alt="${news.title}">

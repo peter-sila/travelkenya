@@ -6,8 +6,8 @@ $tour_sql = "SELECT * FROM tours";
 $tour_result = $conn->query($tour_sql);
 
 $tours = [];
-if ($tour_result->rowCount() > 0) {
-    while ($row = $tour_result->fetch(PDO::FETCH_ASSOC)) {
+if ($tour_result->num_rows > 0) {
+    while ($row = $tour_result->fetch_assoc()) {
         $tours[] = $row;
     }
 } else {

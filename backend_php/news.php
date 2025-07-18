@@ -6,8 +6,8 @@ $news_sql = "SELECT * FROM news";
 $news_result = $conn->query($news_sql);
 
 $news = [];
-if ($news_result->rowCount() > 0) {
-    while ($row = $news_result->fetch(PDO::FETCH_ASSOC)) {
+if ($news_result->num_rows > 0) {
+    while ($row = $news_result->fetch_assoc()) {
         $news[] = $row;
     }
 } else {

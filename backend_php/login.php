@@ -23,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       exit();
     }
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = :s OR email = :s");
-    $stmt->bindParam(':s', $username, PDO::PARAM_STR);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+    $stmt->bind_param('s', $username);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();

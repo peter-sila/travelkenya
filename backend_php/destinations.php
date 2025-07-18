@@ -6,8 +6,8 @@ $destination_sql = "SELECT * FROM destinations";
 $destination_result = $conn->query($destination_sql);
 
 $destinations = [];
-if ($destination_result->rowCount() > 0) {
-    while ($row = $destination_result->fetch(PDO::FETCH_ASSOC)) {
+if ($destination_result->num_rows > 0) {
+    while ($row = $destination_result->fetch_assoc()) {
         $destinations[] = $row;
     }
 } else {

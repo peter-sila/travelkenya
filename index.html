@@ -18,45 +18,45 @@
         </div>
         <div class="search-bar">
             <div class="tabs">
-                <button class="tab active">Hotel</button>
-                <button class="tab">Space</button>
-                <button class="tab">Tour</button>
-                <button class="tab">Car</button>
+                <button id="hotel-tab" class="tab active">Hotel</button>
+                <button id="destination-tab" class="tab">Destination</button>
+                <button id="tour-tab" class="tab">Tour</button>
             </div>
             <div class="search-fields">
-                <input type="text" placeholder="Where are you going?" />
-                <input type="text" placeholder="Check In - Out" />
-                <input type="text" placeholder="1 Adult - 0 Child" />
-                <button class="search-button">SEARCH</button>
+                <form id="tabs-form">
+                    <input id="inputTxt" type="text" placeholder="Where are you going?" />
+                    <button id="searchBtn" class="search-button">SEARCH</button>
+                </form>
             </div>
         </div>
     </section>
+    <div class="content" id="content">
+        <section class="featured">
+            <h2>Featured Hotels and Resorts</h2>
+            <p>Book with us and unlock unbeatable discounts!</p>
+            <div class="carousel" id="hotels-container">
+            
+            </div>
+        </section>
 
-    <section class="featured">
-        <h2>Featured Hotels and Resorts</h2>
-        <p>Book with us and unlock unbeatable discounts!</p>
-        <div class="carousel" id="hotels-container">
-           
-        </div>
-    </section>
+        <section class="featured">
+            <h2>Featured Tours</h2>
+            <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Tours!</p>
+            <div class="carousel" id="tours-container">
 
-    <section class="featured">
-        <h2>Featured Tours</h2>
-        <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Tours!</p>
-        <div class="carousel" id="tours-container">
+            </div>
+        </section>
 
-        </div>
-    </section>
-
-    <section class="featured">
-        <h2>Top Places</h2>
-        <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Places!</p>
-        <div class="carousel" id="destinations-container">
-           
-        </div>
-    </section>
-
+        <section class="featured">
+            <h2>Top Places</h2>
+            <p>Discover Our Epic Adventures, Go Big or Go Home with Our Rad Places!</p>
+            <div class="carousel" id="destinations-container">
+            
+            </div>
+        </section>
+    </div>
   <script src="js/home.js"></script>
+  <script src="static/js/header.js"></script>
 </body>
 <footer id="footer"></footer>
 </html>

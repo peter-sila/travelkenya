@@ -11,6 +11,31 @@ body {
   line-height: 1.6;
 }
 
+nav .breadcrumb {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background: #e9ecef;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+nav .breadcrumb li {
+  list-style: none;
+  margin-right: 10px;
+}
+
+nav .breadcrumb li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+nav .breadcrumb li a:hover {
+  text-decoration: underline;
+}
+
 #news-view-container {
   max-width: 800px;
   margin: 50px auto;

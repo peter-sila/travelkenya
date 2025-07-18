@@ -4,10 +4,10 @@ include '../db/dbconnect.php';
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 
-    $stmt = $conn->prepare("SELECT * FROM news WHERE id = :id ");
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt = $conn->prepare("SELECT * FROM news WHERE id = ?");
+    $stmt->bind_param('id', $id);
     $stmt->execute();
-    $news = $stmt->fetch(PDO::FETCH_ASSOC);
+    $news = $stmt->get_result();;
 
 
     if ($news) {

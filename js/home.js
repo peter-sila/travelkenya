@@ -1,11 +1,68 @@
-const tabs = document.querySelectorAll('.tab');
+// Tab buttons and input
+const tabs = document.querySelectorAll(".tab");
+const inputTxt = document.getElementById("inputTxt");
+const tabsForm = document.getElementById("tabs-form");
+
+let selectedTab = "hotel";
 
 tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    selectedTab = tab.id.replace("-tab", "");
   });
 });
+
+// Handling form submit
+tabsForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const keyword = inputTxt.value.trim();
+
+  if (!keyword) return;
+
+  // Sending search request to PHP backend
+  fetch("backend_php/home_search.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      keyword: keyword,
+      type: selectedTab
+    })
+  })
+  .then(res => res.json())
+  .then(results => {
+    displayResults(results);
+  })
+  .catch(err => {
+    console.error("Search error:", err);
+  });
+});
+
+// Displaying search results
+function displayResults(results) {
+  const resultsDiv = document.getElementById("content");
+  resultsDiv.innerHTML = "";
+
+  if (results.length === 0) {
+    resultsDiv.innerHTML = "<p>No results found.</p>";
+    return;
+  }
+
+  results.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${item.name}</h3>
+      <p>Location: ${item.location || item.address || "N/A"}</p>
+      <p>Price: KSh ${item.price ? parseInt(item.price).toLocaleString() : "N/A"}</p>
+    `;
+    resultsDiv.appendChild(card);
+  });
+}
 
 
 
@@ -121,3 +178,7 @@ fetch("backend_php/destinations.php")
     });
   })
   .catch(err => console.error(err));
+
+
+
+  

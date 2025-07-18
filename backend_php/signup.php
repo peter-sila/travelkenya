@@ -48,21 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Check if username or email already exists
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+        $stmt->bind_param('username', $username);
+        $stmt->bind_param('email', $email);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->num_rows() > 0) {
             echo json_encode(['error' => 'Username or email already exists.']);
             exit();
         }
 
         // Insert new user
-        $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-        $insert_stmt->bindParam(':username', $username);
-        $insert_stmt->bindParam(':email', $email);
-        $insert_stmt->bindParam(':password', $hashed_password);
+        $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+        $insert_stmt->bind_param('username', $username);
+        $insert_stmt->bind_param('email', $email);
+        $insert_stmt->bind_param('password', $hashed_password);
 
         if ($insert_stmt->execute()) {
             echo json_encode(['success' => 'User registered successfully.']);
