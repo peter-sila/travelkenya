@@ -1,0 +1,76 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 230px;
+  height: 70px;
+  width: calc(100% - 230px);
+  z-index: 1000;
+  background-color: #343a40;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul marquee {
+  font-size: 1.2rem;
+  color: #ffc107;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  animation: marquee 10s linear infinite;
+
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+nav ul .user {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul .user:hover {
+  color: #ffc107;
+}
+
+nav ul .user .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav ul .user .nav-item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul .user .nav-item a:hover {
+  color: #ffc107;
+}
+
+nav ul .user .nav-item i {
+  color: #ffc107;
+  font-size: 1.5rem;
+}

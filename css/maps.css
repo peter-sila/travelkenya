@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.site-header {
+  background: #003366;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.site-header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.map-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.map-section h1 {
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.map-section .description {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.map-container {
+  max-width: 900px;
+  margin: 0 auto;
+  border: 4px solid #003366;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.site-footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .map-container {
+    max-width: 100%;
+  }
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 15px;
+  }
+  .site-header nav ul {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .map-section {
+    padding: 25px 8px;
+  }
+  .site-header {
+    padding: 10px 8px;
+  }
+  .site-header nav ul {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .map-container {
+    border-width: 2px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 378px) {
+  .site-header .logo {
+    font-size: 1rem;
+  }
+  .map-section h1 {
+    font-size: 1.1rem;
+  }
+  .site-footer {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
