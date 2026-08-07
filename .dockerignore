@@ -1,0 +1,9 @@
+node_modules
+vendor
+.git
+.github
+.vscode
+*.log
+*.md
+tmp
+docker-compose.override.yml

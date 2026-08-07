@@ -1,46 +1,50 @@
-// Tab buttons and input
+// Tab buttons and input (guarded)
 const tabs = document.querySelectorAll(".tab");
 const inputTxt = document.getElementById("inputTxt");
 const tabsForm = document.getElementById("tabs-form");
 
 let selectedTab = "hotel";
 
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
+if (tabs && tabs.length) {
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
 
-    selectedTab = tab.id.replace("-tab", "");
+      selectedTab = tab.id.replace("-tab", "");
+    });
   });
-});
+}
 
-// Handling form submit
-tabsForm.addEventListener("submit", e => {
-  e.preventDefault();
+// Handling form submit (only if elements exist)
+if (tabsForm) {
+  tabsForm.addEventListener("submit", e => {
+    e.preventDefault();
 
-  const keyword = inputTxt.value.trim();
+    const keyword = inputTxt ? inputTxt.value.trim() : '';
 
-  if (!keyword) return;
+    if (!keyword) return;
 
-  // Sending search request to PHP backend
-  fetch("http://localhost:8000/home_search.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      keyword: keyword,
-      type: selectedTab
+    // Sending search request to PHP backend
+    fetch("/backend_php/home_search.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        keyword: keyword,
+        type: selectedTab
+      })
     })
-  })
-  .then(res => res.json())
-  .then(results => {
-    displayResults(results);
-  })
-  .catch(err => {
-    console.error("Search error:", err);
+    .then(res => res.json())
+    .then(results => {
+      displayResults(results);
+    })
+    .catch(err => {
+      console.error("Search error:", err);
+    });
   });
-});
+}
 
 // Displaying search results
 function displayResults(results) {
@@ -79,13 +83,28 @@ fetch('static/footer.html')
     document.getElementById('footer').innerHTML = data;
   });
 
-function toggleFavorite(el) {
+// shared current user id (use window to avoid redeclaration across scripts)
+window.currentUserId = window.currentUserId || null;
+fetch('/backend_php/session_info.php').then(r=>r.json()).then(j=>{ if (j.user_id) window.currentUserId = j.user_id; }).catch(()=>{});
+
+function toggleFavorite(el, id) {
+  if (window.currentUserId) {
+    const adding = el.textContent !== '❤️';
+    fetch('/backend_php/favorites.php', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action: adding ? 'add' : 'remove', tour_id: parseInt(id,10) })
+    }).then(r=>r.json()).then(j=>{
+      if (j.success) el.textContent = adding ? '❤️' : '♡';
+    }).catch(err=>console.error(err));
+    return;
+  }
   el.classList.toggle("active");
   el.textContent = el.classList.contains("active") ? "❤️" : "♡";
 }
 
 // HERE I HANDLE THE HOTELS DISPLAY FOR CARDS
-fetch("http://localhost:8000/hotels.php")
+fetch("/backend_php/hotels.php")
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById("hotels-container");
@@ -94,10 +113,10 @@ fetch("http://localhost:8000/hotels.php")
     data.forEach(hotel => {
       // HERE I NOW Create card HTML
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card fade-in";
 
       card.innerHTML = `
-        <img src="assets/hotels/${hotel.image}" alt="${hotel.name}">
+        <img src="assets/hotels/${hotel.image}" alt="${hotel.name}" loading="lazy" decoding="async">
         <div class="favorite" onclick="toggleFavorite(this)">♡</div>
         <div class="card-body">
             <div class="title">${hotel.name}</div>
@@ -111,13 +130,14 @@ fetch("http://localhost:8000/hotels.php")
       `; 
 
       container.appendChild(card);
+      setTimeout(() => card.classList.add('show'), 30);
     });
   })
   .catch(err => console.error('No hotels found'));
 
 
 // HERE I HANDLE THE TOURS DISPLAY FOR CARDS
-fetch("http://localhost:8000/tours.php")
+fetch("/backend_php/tours.php")
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById("tours-container");
@@ -125,10 +145,10 @@ fetch("http://localhost:8000/tours.php")
 
     data.forEach(tour => {
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card fade-in";
 
       card.innerHTML = `
-        <img src="assets/tours/${tour.image}" alt="${tour.name}">
+        <img src="assets/tours/${tour.image}" alt="${tour.name}" loading="lazy" decoding="async">
         <div class="favorite" onclick="toggleFavorite(this)">♡</div>
         <div class="card-body">
             <div class="title">${tour.name}</div>
@@ -141,13 +161,14 @@ fetch("http://localhost:8000/tours.php")
       `;
 
       container.appendChild(card);
+      setTimeout(() => card.classList.add('show'), 30);
     });
   })
   .catch(err => console.error('No tours found'));
 
 
 // HERE I HANDLE THE DESTINATIONS DISPLAY FOR CARDS
-fetch("http://localhost:8000/destinations.php")
+fetch("/backend_php/destinations.php")
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById("destinations-container");
@@ -155,10 +176,10 @@ fetch("http://localhost:8000/destinations.php")
 
     data.forEach(destination => {
       const card = document.createElement("div");
-      card.className = "card highlight-card";
+      card.className = "card highlight-card fade-in";
 
       card.innerHTML = `
-        <img src="assets/destinations/${destination.image}" alt="${destination.title}">
+        <img src="assets/destinations/${destination.image}" alt="${destination.title}" loading="lazy" decoding="async">
         <div class="favorite" onclick="toggleFavorite(this)">♡</div>
         <div class="card-body">
             <div class="title">${destination.title}</div>
@@ -168,6 +189,7 @@ fetch("http://localhost:8000/destinations.php")
       `;
 
       container.appendChild(card);
+      setTimeout(() => card.classList.add('show'), 30);
     });
   })
   .catch(err => console.error('No destination found'));

@@ -1,3 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin - Dashboard</title>
+  <link rel="stylesheet" href="../static/css/header.css">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;padding:16px}
+    .panel{max-width:900px;margin:0 auto}
+    .card{padding:12px;border:1px solid #ddd;margin-bottom:12px}
+    label{display:block;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main class="panel">
+    <h1>Admin Dashboard</h1>
+    <section class="card">
+      <h2>Create Tour</h2>
+      <form id="createTourForm">
+        <label>Title <input name="title"></label>
+        <label>Location <input name="location"></label>
+        <label>Price <input name="price" type="number"></label>
+        <label>Type <input name="type"></label>
+        <label>Image filename <input name="image"></label>
+        <button type="submit">Create</button>
+        <p id="createStatus"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Manage</h2>
+      <p>Placeholder for edit/delete lists and other admin tools.</p>
+    </section>
+  </main>
+  <script src="../static/js/header.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>

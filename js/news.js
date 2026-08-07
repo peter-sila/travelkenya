@@ -15,9 +15,9 @@ fetch("http://localhost:8000/news.php")
       const card = document.createElement("div");
       const titlebreadcrumb = document.getElementById("news-title-breadcrumb");
       titlebreadcrumb.innerText = news.title;
-      card.className = "news-card";
+      card.className = "news-card fade-in";
       card.innerHTML = `
-        <img src="assets/news/${news.image}" alt="${news.title}">
+        <img src="assets/news/${news.image}" alt="${news.title}" loading="lazy" decoding="async">
         <div class="card-content">
           <h2><a href="news_details.html?id=${news.id}">${news.title}</a></h2>
           <p>${news.content}</p>
@@ -29,6 +29,7 @@ fetch("http://localhost:8000/news.php")
         </div>
       `;
       container.appendChild(card);
+      setTimeout(() => card.classList.add('show'), 30);
     });
 
   })

@@ -160,3 +160,40 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* Animations and micro-interactions */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.card {
+  opacity: 1;
+}
+
+.fade-in { opacity: 0; transform: translateY(10px); transition: opacity 360ms ease, transform 360ms ease; }
+.fade-in.show { opacity: 1; transform: translateY(0); }
+
+.favorite { transition: transform 200ms ease, color 200ms ease; }
+.favorite:hover { transform: scale(1.08); }
+.favorite.active { animation: pulse 600ms ease; color: #e53935; }
+
+.search-button, button, .book-btn {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.search-button:active, button:active, .book-btn:active { transform: translateY(2px); }
+.book-btn { background:#0077cc;color:#fff;border:none;padding:8px 10px;border-radius:6px;cursor:pointer;margin:8px 10px 0 0 }
+.book-btn:hover { background:#005fa3 }
+
+/* subtle header reveal */
+.navbar { transform-origin: top center; animation: slideDown 420ms ease both; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity:1; transform: translateY(0); } }
+
+.pagination button { margin: 0 4px; padding: 6px 10px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer }
+.pagination button.active { background:#0077cc; color:#fff; border-color:#0077cc }
+.pagination button:disabled { opacity:0.5; cursor:not-allowed }
+
+/* reveal animation tuning */
+.fade-in { will-change: opacity, transform; }
+.fade-in.show { transition-delay: 0s; }

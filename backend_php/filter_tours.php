@@ -18,23 +18,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 header("Content-Type: application/json");
-include_once '../db/dbconnect.php';
+require_once '../db/dbconnect.php';
+/** @var mysqli $conn */
 
-$data = json_decode(file_get_contents("php://input"), true);
+$data = json_decode(file_get_contents("php://input"), true) ?? [];
 
 $keyword = isset($data['keyword']) ? "%" . $conn->real_escape_string($data['keyword']) . "%" : "%";
 $price = isset($data['price']) ? (int)$data['price'] : 50000;
 $ratings = isset($data['ratings']) ? $data['ratings'] : [];
 $types = isset($data['types']) ? $data['types'] : [];
 
-$sql = "SELECT * FROM tours WHERE name LIKE ? AND price <= ?";
+// Pagination
+$page = isset($data['page']) && (int)$data['page'] > 0 ? (int)$data['page'] : 1;
+$per_page = isset($data['per_page']) && (int)$data['per_page'] > 0 ? (int)$data['per_page'] : 10;
+
+// Build base WHERE clause and params
+$sql_where = "FROM tours WHERE name LIKE ? AND price <= ?";
 $params = [$keyword, $price];
 $bind_types = 'si';
 
 // Handle tour types
 if (!empty($types)) {
     $placeholders = implode(',', array_fill(0, count($types), '?'));
-    $sql .= " AND type IN ($placeholders)";
+    $sql_where .= " AND type IN ($placeholders)";
     $params = array_merge($params, $types);
     $bind_types .= str_repeat('s', count($types));
 }
@@ -42,10 +48,31 @@ if (!empty($types)) {
 // Handle ratings
 if (!empty($ratings)) {
     $placeholders = implode(',', array_fill(0, count($ratings), '?'));
-    $sql .= " AND rating IN ($placeholders)";
+    $sql_where .= " AND rating IN ($placeholders)";
     $params = array_merge($params, array_map('intval', $ratings));
     $bind_types .= str_repeat('i', count($ratings));
 }
+
+// Get total count for pagination
+$count_sql = "SELECT COUNT(*) as total " . $sql_where;
+$count_stmt = $conn->prepare($count_sql);
+if ($count_stmt === false) {
+    echo json_encode(["error" => "Failed to prepare count statement."]);
+    exit;
+}
+$count_stmt->bind_param($bind_types, ...$params);
+$count_stmt->execute();
+$count_res = $count_stmt->get_result();
+$total = 0;
+if ($row = $count_res->fetch_assoc()) {
+    $total = (int)$row['total'];
+}
+
+// Apply ordering and limits
+$offset = ($page - 1) * $per_page;
+$sql = "SELECT * " . $sql_where . " ORDER BY id DESC LIMIT ?, ?";
+$params_with_limit = array_merge($params, [$offset, $per_page]);
+$bind_types_with_limit = $bind_types . 'ii';
 
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
@@ -53,7 +80,7 @@ if ($stmt === false) {
     exit;
 }
 
-$stmt->bind_param($bind_types, ...$params);
+$stmt->bind_param($bind_types_with_limit, ...$params_with_limit);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -70,5 +97,5 @@ while ($row = $result->fetch_assoc()) {
     ];
 }
 
-echo json_encode($tours);
+echo json_encode(['tours' => $tours, 'total' => $total]);
 ?>
