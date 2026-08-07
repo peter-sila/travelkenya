@@ -17,22 +17,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-require_once '../db/dbconnect.php';
+require_once __DIR__ . '/../db/dbconnect.php';
+
+header('Content-Type: application/json');
 
 $tour_sql = "SELECT * FROM tours";
-$tour_result = $conn->query($tour_sql);
-
 $tours = [];
-if ($tour_result->num_rows > 0) {
-    while ($row = $tour_result->fetch_assoc()) {
-        $tours[] = $row;
+try {
+    $tour_result = $conn->query($tour_sql);
+    if ($tour_result && $tour_result->num_rows > 0) {
+        while ($row = $tour_result->fetch_assoc()) {
+            $tours[] = $row;
+        }
     }
-} else {
-    echo "No tours found.";
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Database error', 'detail' => $e->getMessage()]);
+    exit();
 }
 
-// tours as a JSON response
-header('Content-Type: application/json');
 echo json_encode($tours, JSON_PRETTY_PRINT);
 $conn = null;
 

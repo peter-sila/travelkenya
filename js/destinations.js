@@ -16,13 +16,17 @@ const paginationEl = document.getElementById("pagination");
 let debounceTimer;
 let currentpage = 1;
 const perPage = 10;
-let currentUserId = null;
-
-// fetch session info
-// shared current user id (use window to avoid redeclaration across scripts)
+// use shared current user id (window) to avoid redeclaration across scripts
 window.currentUserId = window.currentUserId || null;
-// fetch session info
-fetch('/backend_php/session_info.php').then(r=>r.json()).then(j=>{ if (j.user_id) window.currentUserId = j.user_id; }).catch(()=>{});
+fetch('/backend_php/session_info.php')
+  .then(res => {
+    if (!res.ok) return Promise.reject(new Error('session_info fetch failed: ' + res.status));
+    const ct = res.headers.get('content-type') || '';
+    if (ct.includes('application/json')) return res.json();
+    return Promise.reject(new Error('session_info: expected JSON'));
+  })
+  .then(j => { if (j.user_id) window.currentUserId = j.user_id; })
+  .catch(()=>{});
 
 searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -68,12 +72,17 @@ function fetchFilteredTours() {
   data.page = currentpage;
   data.per_page = perPage;
 
-  fetch("http://localhost:8000/filter_tours.php", {
+  fetch("/backend_php/filter_tours.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) return response.text().then(t => { throw new Error('filter_tours error: ' + response.status + ' - ' + t); });
+      const ct = response.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) return response.text().then(t => { throw new Error('filter_tours: expected JSON but got: ' + t); });
+      return response.json();
+    })
     .then(data => {
       spinner.style.display = "none";
       resultsDiv.innerHTML = "";
@@ -111,14 +120,14 @@ function fetchFilteredTours() {
       renderPagination(total);
     })
     .catch(err => {
-      console.error("Error:", err);
-      spinner.style.display = "none";
-      resultsDiv.innerHTML = "<p>Failed to load tours.</p>";
-    });
+        console.error("Error fetching tours:", err);
+        spinner.style.display = "none";
+        resultsDiv.innerHTML = "<p>Failed to load tours.</p>";
+      });
 }
 
 function bookTour(tourId) {
-  if (!currentUserId) {
+  if (!window.currentUserId) {
     alert('Please login to make a booking.');
     return;
   }

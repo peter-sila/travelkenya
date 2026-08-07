@@ -18,22 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
-require_once '../db/dbconnect.php';
+require_once __DIR__ . '/../db/dbconnect.php';
+
+header('Content-Type: application/json');
 
 $destination_sql = "SELECT * FROM destinations";
-$destination_result = $conn->query($destination_sql);
-
 $destinations = [];
-if ($destination_result->num_rows > 0) {
-    while ($row = $destination_result->fetch_assoc()) {
-        $destinations[] = $row;
+try {
+    $destination_result = $conn->query($destination_sql);
+    if ($destination_result && $destination_result->num_rows > 0) {
+        while ($row = $destination_result->fetch_assoc()) {
+            $destinations[] = $row;
+        }
     }
-} else {
-    echo "No destinations found.";
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Database error', 'detail' => $e->getMessage()]);
+    exit();
 }
 
-// destinations as a JSON response
-header('Content-Type: application/json');
 echo json_encode($destinations, JSON_PRETTY_PRINT);
 $conn = null;
 

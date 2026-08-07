@@ -36,7 +36,12 @@ if (tabsForm) {
         type: selectedTab
       })
     })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) return res.text().then(t => { throw new Error('home_search error: ' + res.status + ' - ' + t); });
+      const ct = res.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) return res.text().then(t => { throw new Error('home_search: expected JSON but got: ' + t); });
+      return res.json();
+    })
     .then(results => {
       displayResults(results);
     })
@@ -49,9 +54,10 @@ if (tabsForm) {
 // Displaying search results
 function displayResults(results) {
   const resultsDiv = document.getElementById("content");
+  if (!resultsDiv) return;
   resultsDiv.innerHTML = "";
 
-  if (results.length === 0) {
+  if (!Array.isArray(results) || results.length === 0) {
     resultsDiv.innerHTML = "<p>No results found.</p>";
     return;
   }
@@ -105,12 +111,18 @@ function toggleFavorite(el, id) {
 
 // HERE I HANDLE THE HOTELS DISPLAY FOR CARDS
 fetch("/backend_php/hotels.php")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) return res.text().then(t => { throw new Error('hotels fetch error: ' + res.status + ' - ' + t); });
+    const ct = res.headers.get('content-type') || '';
+    if (!ct.includes('application/json')) return res.text().then(t => { throw new Error('hotels: expected JSON but got: ' + t); });
+    return res.json();
+  })
   .then(data => {
     const container = document.getElementById("hotels-container");
+    if (!container) return;
     container.innerHTML = "";
 
-    data.forEach(hotel => {
+    (Array.isArray(data) ? data : []).forEach(hotel => {
       // HERE I NOW Create card HTML
       const card = document.createElement("div");
       card.className = "card fade-in";
@@ -133,17 +145,23 @@ fetch("/backend_php/hotels.php")
       setTimeout(() => card.classList.add('show'), 30);
     });
   })
-  .catch(err => console.error('No hotels found'));
+  .catch(err => console.error('Hotels fetch error:', err));
 
 
 // HERE I HANDLE THE TOURS DISPLAY FOR CARDS
 fetch("/backend_php/tours.php")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) return res.text().then(t => { throw new Error('tours fetch error: ' + res.status + ' - ' + t); });
+    const ct = res.headers.get('content-type') || '';
+    if (!ct.includes('application/json')) return res.text().then(t => { throw new Error('tours: expected JSON but got: ' + t); });
+    return res.json();
+  })
   .then(data => {
     const container = document.getElementById("tours-container");
+    if (!container) return;
     container.innerHTML = ""; 
 
-    data.forEach(tour => {
+    (Array.isArray(data) ? data : []).forEach(tour => {
       const card = document.createElement("div");
       card.className = "card fade-in";
 
@@ -164,17 +182,23 @@ fetch("/backend_php/tours.php")
       setTimeout(() => card.classList.add('show'), 30);
     });
   })
-  .catch(err => console.error('No tours found'));
+  .catch(err => console.error('Tours fetch error:', err));
 
 
 // HERE I HANDLE THE DESTINATIONS DISPLAY FOR CARDS
 fetch("/backend_php/destinations.php")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) return res.text().then(t => { throw new Error('destinations fetch error: ' + res.status + ' - ' + t); });
+    const ct = res.headers.get('content-type') || '';
+    if (!ct.includes('application/json')) return res.text().then(t => { throw new Error('destinations: expected JSON but got: ' + t); });
+    return res.json();
+  })
   .then(data => {
     const container = document.getElementById("destinations-container");
+    if (!container) return;
     container.innerHTML = ""; 
 
-    data.forEach(destination => {
+    (Array.isArray(data) ? data : []).forEach(destination => {
       const card = document.createElement("div");
       card.className = "card highlight-card fade-in";
 
@@ -192,7 +216,7 @@ fetch("/backend_php/destinations.php")
       setTimeout(() => card.classList.add('show'), 30);
     });
   })
-  .catch(err => console.error('No destination found'));
+  .catch(err => console.error('Destinations fetch error:', err));
 
 
 
