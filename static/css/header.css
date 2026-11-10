@@ -41,6 +41,24 @@ body {
   font-weight: normal;
 }
 
+.top-bar .logout-button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.top-bar .logout-button:hover {
+  color: #0077cc;
+}
+
+.top-bar .logout-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .navbar {
   margin: 0;
   background: #fff;

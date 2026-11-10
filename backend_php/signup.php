@@ -29,22 +29,25 @@ if (!empty($errors)) {
 
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-$stmt = $conn->prepare('SELECT id FROM users WHERE username = ? OR email = ? LIMIT 1');
+$stmt = $conn->prepare('SELECT id FROM users WHERE
+
+
+
+ email = ? LIMIT 1');
 if ($stmt === false) json_response(['error' => 'Database error.'], 500);
-$stmt->bind_param('ss', $username, $email);
+$stmt->bind_param('s', $email);
 $stmt->execute();
 $res = $stmt->get_result();
 if ($res && $res->num_rows > 0) {
-    json_response(['error' => 'Username or email already exists.'], 409);
+    json_response(['error' => 'Email already exists.'], 409);
 }
 
-$insert = $conn->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
+$insert = $conn->prepare('INSERT INTO users (email, password) VALUES (?, ?)');
 if ($insert === false) json_response(['error' => 'Database error.'], 500);
-$insert->bind_param('sss', $username, $email, $hashed);
+$insert->bind_param('ss', $email, $hashed);
 if ($insert->execute()) {
     json_response(['success' => 'User registered successfully.']);
+    Header('Location: ../login.html');
 } else {
     json_response(['error' => 'Failed to register user.'], 500);
 }
-
-?>

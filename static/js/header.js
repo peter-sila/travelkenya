@@ -18,6 +18,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (headerEl && headerHtml) headerEl.innerHTML = headerHtml;
   if (footerEl && footerHtml) footerEl.innerHTML = footerHtml;
 
+  if (headerEl) {
+    try {
+      const response = await fetch('/backend_php/session_info.php', {
+        credentials: 'same-origin'
+      });
+      if (!response.ok) throw new Error(`Session check failed: ${response.status}`);
+
+      const session = await response.json();
+      if (session.user_id) {
+        headerEl.querySelectorAll('.auth-links a[href="login.html"], .auth-links a[href="signup.html"]')
+          .forEach(link => link.remove());
+
+        const authLinks = headerEl.querySelector('.auth-links');
+        if (authLinks) {
+          const logoutButton = document.createElement('button');
+          logoutButton.type = 'button';
+          logoutButton.className = 'logout-button';
+          logoutButton.textContent = 'Logout';
+          logoutButton.addEventListener('click', async () => {
+            logoutButton.disabled = true;
+            try {
+              const logoutResponse = await fetch('/backend_php/logout.php', {
+                method: 'POST',
+                credentials: 'same-origin'
+              });
+              if (!logoutResponse.ok) {
+                throw new Error(`Logout failed: ${logoutResponse.status}`);
+              }
+              window.location.href = '/index.html';
+            } catch (error) {
+              console.error('Unable to log out:', error);
+              logoutButton.disabled = false;
+              alert('Unable to log out. Please try again.');
+            }
+          });
+          authLinks.appendChild(logoutButton);
+        }
+      }
+    } catch (error) {
+      console.error('Unable to check login status:', error);
+    }
+  }
+
   // Attach nav tab active behavior after header is injected
   const tab_s = document.querySelectorAll('.nav-tabs');
   tab_s.forEach(tab => {

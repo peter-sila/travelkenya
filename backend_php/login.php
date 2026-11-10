@@ -10,16 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['error' => 'Invalid request method.'], 405);
 }
 
-$username = isset($_POST['username']) ? sanitize_input($_POST['username']) : '';
+$username = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 if ($username === '' || $password === '') {
-    json_response(['error' => 'Username and password are required.'], 422);
+    json_response(['error' => 'Email and password are required.'], 422);
 }
 
-$stmt = $conn->prepare('SELECT id, password FROM users WHERE username = ? OR email = ? LIMIT 1');
+$stmt = $conn->prepare('SELECT id, password FROM users WHERE email = ? LIMIT 1');
 if ($stmt === false) json_response(['error' => 'Database error.'], 500);
-$stmt->bind_param('ss', $username, $username);
+$stmt->bind_param('s', $username);
 $stmt->execute();
 $res = $stmt->get_result();
 
@@ -28,12 +28,11 @@ if ($res && $res->num_rows > 0) {
     if (password_verify($password, $user['password'])) {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user['id'];
-        json_response(['success' => 'Logged in.']);
+        header('Location: ../index.html');
+        exit;
     } else {
         json_response(['error' => 'Invalid credentials.'], 401);
     }
 } else {
     json_response(['error' => 'No user found.'], 404);
 }
-
-?>
