@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 $allowed_origins = [
     'http://127.0.0.1:5501',
     'http://127.0.0.1:5500',
@@ -36,6 +37,24 @@ try {
     exit();
 }
 
+=======
+require_once '../db/dbconnect.php';
+
+$tour_sql = "SELECT * FROM tours";
+$tour_result = $conn->query($tour_sql);
+
+$tours = [];
+if ($tour_result->num_rows > 0) {
+    while ($row = $tour_result->fetch_assoc()) {
+        $tours[] = $row;
+    }
+} else {
+    echo "No tours found.";
+}
+
+// tours as a JSON response
+header('Content-Type: application/json');
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 echo json_encode($tours, JSON_PRETTY_PRINT);
 $conn = null;
 

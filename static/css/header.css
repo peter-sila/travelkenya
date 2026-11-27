@@ -41,6 +41,7 @@ body {
   font-weight: normal;
 }
 
+<<<<<<< HEAD
 .top-bar .logout-button {
   border: 0;
   padding: 0;
@@ -59,6 +60,8 @@ body {
   opacity: 0.7;
 }
 
+=======
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 .navbar {
   margin: 0;
   background: #fff;
@@ -177,6 +180,7 @@ body {
     padding: 5px 0;
     font-size: 0.9rem;
   }
+<<<<<<< HEAD
 }
 
 /* Animations and micro-interactions */
@@ -215,3 +219,6 @@ body {
 /* reveal animation tuning */
 .fade-in { will-change: opacity, transform; }
 .fade-in.show { transition-delay: 0s; }
+=======
+}
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39

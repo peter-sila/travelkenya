@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 
 $allowed_origins = [
     'http://127.0.0.1:5501',
@@ -17,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
+=======
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 include '../db/dbconnect.php';
 
 if (isset($_GET['id'])) {

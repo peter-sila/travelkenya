@@ -12,6 +12,7 @@ const priceFilter = document.getElementById("priceFilter");
 const priceValue = document.getElementById("priceValue");
 const spinner = document.getElementById("loadingSpinner");
 const resultsDiv = document.getElementById("destinations-container");
+<<<<<<< HEAD
 const paginationEl = document.getElementById("pagination");
 let debounceTimer;
 let currentpage = 1;
@@ -31,22 +32,40 @@ fetch('/backend_php/session_info.php')
 searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
   currentpage = 1;
+=======
+let debounceTimer;
+let currentpage = 1;
+
+searchForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
   fetchFilteredTours();
 });
 
 searchInput.addEventListener("input", () => {
   clearTimeout(debounceTimer);
+<<<<<<< HEAD
   debounceTimer = setTimeout(() => { currentpage = 1; fetchFilteredTours(); }, 300);
+=======
+  debounceTimer = setTimeout(fetchFilteredTours, 300);
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 });
 
 priceFilter.addEventListener("input", () => {
   priceValue.textContent = priceFilter.value;
+<<<<<<< HEAD
   currentpage = 1;
+=======
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
   fetchFilteredTours();
 });
 
 document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+<<<<<<< HEAD
   cb.addEventListener("change", () => { currentpage = 1; fetchFilteredTours(); });
+=======
+  cb.addEventListener("change", fetchFilteredTours);
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 });
 
 function fetchFilteredTours() {
@@ -68,15 +87,21 @@ function fetchFilteredTours() {
     ratings: selectedRatings,
     types: selectedTypes
   };
+<<<<<<< HEAD
   // pagination params
   data.page = currentpage;
   data.per_page = perPage;
 
   fetch("/backend_php/filter_tours.php", {
+=======
+
+  fetch("backend_php/filter_tours.php", {
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
+<<<<<<< HEAD
     .then(response => {
       if (!response.ok) return response.text().then(t => { throw new Error('filter_tours error: ' + response.status + ' - ' + t); });
       const ct = response.headers.get('content-type') || '';
@@ -88,6 +113,12 @@ function fetchFilteredTours() {
       resultsDiv.innerHTML = "";
       const tours = data.tours || [];
       const total = data.total || 0;
+=======
+    .then(response => response.json())
+    .then(tours => {
+      spinner.style.display = "none";
+      resultsDiv.innerHTML = "";
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 
       if (tours.length === 0) {
         resultsDiv.innerHTML = "<p>No tours found.</p>";
@@ -97,9 +128,14 @@ function fetchFilteredTours() {
           div.className = "card highlight-card fade-in";
           const favIcon = isFavorite(tour.id) ? "❤️" : "♡";
           div.innerHTML = `
+<<<<<<< HEAD
             <img src="assets/tours/${tour.image}" alt="${tour.title}" loading="lazy" decoding="async">
             <div class="favorite" onclick="toggleFavorite(this, '${tour.id}')">${favIcon}</div>
             <button class="book-btn" onclick="bookTour(${tour.id})">Book</button>
+=======
+            <img src="assets/tours/${tour.image}" alt="${tour.title}">
+            <div class="favorite" onclick="toggleFavorite(this, '${tour.id}')">${favIcon}</div>
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
             <div class="card-body">
               <div class="title">${tour.title}</div>
               <div class="location">${tour.location}</div>
@@ -115,6 +151,7 @@ function fetchFilteredTours() {
           setTimeout(() => div.classList.add("show"), 50);
         });
       }
+<<<<<<< HEAD
 
       // render pagination
       renderPagination(total);
@@ -158,6 +195,17 @@ function toggleFavorite(el, id) {
   }
 
   // fallback to localStorage for anonymous users
+=======
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      spinner.style.display = "none";
+      resultsDiv.innerHTML = "<p>Failed to load tours.</p>";
+    });
+}
+
+function toggleFavorite(el, id) {
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
   let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
   if (favorites.includes(id)) {
     favorites = favorites.filter(favId => favId !== id);
@@ -173,6 +221,7 @@ function isFavorite(id) {
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
   return favorites.includes(id);
 }
+<<<<<<< HEAD
 
 function renderPagination(total) {
   if (!paginationEl) return;
@@ -221,3 +270,5 @@ document.addEventListener('DOMContentLoaded', () => {
       fetchFilteredTours();
   }
 });
+=======
+>>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
