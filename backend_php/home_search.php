@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 $allowed_origins = [
     'http://127.0.0.1:5501',
@@ -18,10 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-=======
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 header("Content-Type: application/json");
-include_once '../db/dbconnect.php';
+require_once __DIR__ . '/../db/dbconnect.php';
+/** @var mysqli $conn */
 
 $data = json_decode(file_get_contents("php://input"), true);
 

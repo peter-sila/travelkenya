@@ -1,1 +1,4 @@
 .env
+db/backup.sql
+db/constants.php
+db/create_destinations.sql

@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 $allowed_origins = [
     'http://127.0.0.1:5501',
@@ -18,10 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-=======
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 header("Content-Type: application/json");
-include '../db/dbconnect.php';
+require_once __DIR__ . '/../db/dbconnect.php';
+/** @var mysqli $conn */
 
 $keyword = isset($_GET['keyword']) ? $conn->real_escape_string($_GET['keyword']) : "";
 

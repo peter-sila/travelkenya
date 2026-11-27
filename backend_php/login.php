@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 require_once '../db/dbconnect.php';
 require_once 'helpers.php';
 require_once 'session.php';
@@ -37,7 +37,6 @@ if ($res && $res->num_rows > 0) {
 } else {
     json_response(['error' => 'No user found.'], 404);
 }
-=======
 
 include '../db/dbconnect.php';
 
@@ -80,4 +79,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "No user found with that username.";
     }
 }
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
