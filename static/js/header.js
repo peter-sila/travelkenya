@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 async function loadFragment(url) {
   try {
     const res = await fetch(url);
@@ -117,13 +116,4 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (e) {
     // ignore
   }
-=======
-const tabs = document.querySelectorAll('.nav-tabs');
-
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-  });
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
 });

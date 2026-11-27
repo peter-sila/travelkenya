@@ -1,13 +1,10 @@
 // HERE I HANDLE THE NEWS DISPLAY FOR CARDS
-<<<<<<< HEAD
-fetch("http://localhost:8000/news.php")
-=======
-fetch("backend_php/news.php")
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
+fetch("/backend_php/news.php")
   .then(res => res.json())
   .then(data => {
     console.log("News:", data);
     const container = document.getElementById("news-container");
+    if (!container) return;
     container.innerHTML = ""; 
 
     if (!data || data.length === 0) {
@@ -18,16 +15,10 @@ fetch("backend_php/news.php")
     data.forEach(news => {
       const card = document.createElement("div");
       const titlebreadcrumb = document.getElementById("news-title-breadcrumb");
-      titlebreadcrumb.innerText = news.title;
-<<<<<<< HEAD
+      if (titlebreadcrumb) titlebreadcrumb.innerText = news.title;
       card.className = "news-card fade-in";
       card.innerHTML = `
         <img src="assets/news/${news.image}" alt="${news.title}" loading="lazy" decoding="async">
-=======
-      card.className = "news-card";
-      card.innerHTML = `
-        <img src="assets/news/${news.image}" alt="${news.title}">
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
         <div class="card-content">
           <h2><a href="news_details.html?id=${news.id}">${news.title}</a></h2>
           <p>${news.content}</p>
@@ -39,10 +30,7 @@ fetch("backend_php/news.php")
         </div>
       `;
       container.appendChild(card);
-<<<<<<< HEAD
       setTimeout(() => card.classList.add('show'), 30);
-=======
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
     });
 
   })
@@ -64,11 +52,7 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 
 if (id) {
-<<<<<<< HEAD
-  fetch(`http://localhost:8000/news_details.php?id=${id}`)
-=======
-  fetch(`backend_php/news_details.php?id=${id}`)
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
+  fetch(`/backend_php/news_details.php?id=${id}`)
     .then(res => res.json())
     .then(data => {
       if (data.error) {

@@ -1,274 +1,245 @@
-// Toggle filter visibility
-const btn = document.getElementById("filter-toggle");
-btn.addEventListener("click", () => {
-  const filters = document.querySelector(".filters");
-  filters.style.display = filters.style.display === "block" ? "none" : "block";
-});
-
-// Search form submit
+const filterButton = document.getElementById("filter-toggle");
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
 const priceFilter = document.getElementById("priceFilter");
 const priceValue = document.getElementById("priceValue");
 const spinner = document.getElementById("loadingSpinner");
 const resultsDiv = document.getElementById("destinations-container");
-<<<<<<< HEAD
 const paginationEl = document.getElementById("pagination");
-let debounceTimer;
-let currentpage = 1;
+
+let currentPage = 1;
 const perPage = 10;
-// use shared current user id (window) to avoid redeclaration across scripts
+
 window.currentUserId = window.currentUserId || null;
-fetch('/backend_php/session_info.php')
-  .then(res => {
-    if (!res.ok) return Promise.reject(new Error('session_info fetch failed: ' + res.status));
-    const ct = res.headers.get('content-type') || '';
-    if (ct.includes('application/json')) return res.json();
-    return Promise.reject(new Error('session_info: expected JSON'));
+fetch("/backend_php/session_info.php")
+  .then(response => {
+    if (!response.ok) throw new Error(`Session lookup failed: ${response.status}`);
+    return response.json();
   })
-  .then(j => { if (j.user_id) window.currentUserId = j.user_id; })
-  .catch(()=>{});
+  .then(session => {
+    if (session.user_id) window.currentUserId = session.user_id;
+  })
+  .catch(error => console.error("Session lookup failed:", error));
 
-searchForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  currentpage = 1;
-=======
+if (filterButton) {
+  filterButton.addEventListener("click", () => {
+    const filters = document.querySelector(".filters");
+    if (filters) {
+      filters.style.display = filters.style.display === "block" ? "none" : "block";
+    }
+  });
+}
+
+if (searchForm) {
+  searchForm.addEventListener("submit", event => {
+    event.preventDefault();
+    currentPage = 1;
+    fetchFilteredTours();
+  });
+}
+
 let debounceTimer;
-let currentpage = 1;
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
+    currentPage = 1;
+    debounceTimer = setTimeout(fetchFilteredTours, 300);
+  });
+}
 
-searchForm.addEventListener("submit", function (e) {
-  e.preventDefault();
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
-  fetchFilteredTours();
-});
+if (priceFilter) {
+  priceFilter.addEventListener("input", () => {
+    if (priceValue) priceValue.textContent = priceFilter.value;
+    currentPage = 1;
+    fetchFilteredTours();
+  });
+}
 
-searchInput.addEventListener("input", () => {
-  clearTimeout(debounceTimer);
-<<<<<<< HEAD
-  debounceTimer = setTimeout(() => { currentpage = 1; fetchFilteredTours(); }, 300);
-=======
-  debounceTimer = setTimeout(fetchFilteredTours, 300);
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
-});
-
-priceFilter.addEventListener("input", () => {
-  priceValue.textContent = priceFilter.value;
-<<<<<<< HEAD
-  currentpage = 1;
-=======
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
-  fetchFilteredTours();
-});
-
-document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-<<<<<<< HEAD
-  cb.addEventListener("change", () => { currentpage = 1; fetchFilteredTours(); });
-=======
-  cb.addEventListener("change", fetchFilteredTours);
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+  checkbox.addEventListener("change", () => {
+    currentPage = 1;
+    fetchFilteredTours();
+  });
 });
 
 function fetchFilteredTours() {
+  if (!spinner || !resultsDiv || !searchInput || !priceFilter) return;
+
   spinner.style.display = "block";
   resultsDiv.innerHTML = "";
 
-  const keyword = searchInput.value.trim();
-  const maxPrice = priceFilter.value;
-
-  const selectedRatings = Array.from(document.querySelectorAll('input[name="rating"]:checked'))
-    .map(cb => cb.value);
-
-  const selectedTypes = Array.from(document.querySelectorAll('input[name="tourType"]:checked'))
-    .map(cb => cb.value);
-
   const data = {
-    keyword: keyword,
-    price: maxPrice,
-    ratings: selectedRatings,
-    types: selectedTypes
+    keyword: searchInput.value.trim(),
+    price: priceFilter.value,
+    ratings: Array.from(document.querySelectorAll('input[name="rating"]:checked'))
+      .map(checkbox => checkbox.value),
+    types: Array.from(document.querySelectorAll('input[name="tourType"]:checked'))
+      .map(checkbox => checkbox.value),
+    page: currentPage,
+    per_page: perPage
   };
-<<<<<<< HEAD
-  // pagination params
-  data.page = currentpage;
-  data.per_page = perPage;
 
   fetch("/backend_php/filter_tours.php", {
-=======
-
-  fetch("backend_php/filter_tours.php", {
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-<<<<<<< HEAD
     .then(response => {
-      if (!response.ok) return response.text().then(t => { throw new Error('filter_tours error: ' + response.status + ' - ' + t); });
-      const ct = response.headers.get('content-type') || '';
-      if (!ct.includes('application/json')) return response.text().then(t => { throw new Error('filter_tours: expected JSON but got: ' + t); });
+      if (!response.ok) throw new Error(`Tour search failed: ${response.status}`);
       return response.json();
     })
     .then(data => {
       spinner.style.display = "none";
-      resultsDiv.innerHTML = "";
-      const tours = data.tours || [];
-      const total = data.total || 0;
-=======
-    .then(response => response.json())
-    .then(tours => {
-      spinner.style.display = "none";
-      resultsDiv.innerHTML = "";
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
+      const tours = Array.isArray(data.tours) ? data.tours : [];
+      const total = Number(data.total) || 0;
 
       if (tours.length === 0) {
         resultsDiv.innerHTML = "<p>No tours found.</p>";
       } else {
         tours.forEach(tour => {
-          const div = document.createElement("div");
-          div.className = "card highlight-card fade-in";
-          const favIcon = isFavorite(tour.id) ? "❤️" : "♡";
-          div.innerHTML = `
-<<<<<<< HEAD
+          const card = document.createElement("div");
+          card.className = "card highlight-card fade-in";
+          const favoriteIcon = isFavorite(tour.id) ? "❤️" : "♡";
+          card.innerHTML = `
             <img src="assets/tours/${tour.image}" alt="${tour.title}" loading="lazy" decoding="async">
-            <div class="favorite" onclick="toggleFavorite(this, '${tour.id}')">${favIcon}</div>
+            <div class="favorite" onclick="toggleFavorite(this, '${tour.id}')">${favoriteIcon}</div>
             <button class="book-btn" onclick="bookTour(${tour.id})">Book</button>
-=======
-            <img src="assets/tours/${tour.image}" alt="${tour.title}">
-            <div class="favorite" onclick="toggleFavorite(this, '${tour.id}')">${favIcon}</div>
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
             <div class="card-body">
               <div class="title">${tour.title}</div>
               <div class="location">${tour.location}</div>
-              <div class="rating">
-                <span>${tour.rating}/5 Excellent</span>
-              </div>
+              <div class="rating"><span>${tour.rating}/5 Excellent</span></div>
               <div class="info">
                 <span class="price">from KSh ${parseInt(tour.price).toLocaleString()} /night</span>
               </div>
             </div>
           `;
-          resultsDiv.appendChild(div);
-          setTimeout(() => div.classList.add("show"), 50);
+          resultsDiv.appendChild(card);
+          setTimeout(() => card.classList.add("show"), 50);
         });
       }
-<<<<<<< HEAD
 
-      // render pagination
       renderPagination(total);
     })
-    .catch(err => {
-        console.error("Error fetching tours:", err);
-        spinner.style.display = "none";
-        resultsDiv.innerHTML = "<p>Failed to load tours.</p>";
-      });
-}
-
-function bookTour(tourId) {
-  if (!window.currentUserId) {
-    alert('Please login to make a booking.');
-    return;
-  }
-  const dateFrom = prompt('Enter start date (YYYY-MM-DD)');
-  if (!dateFrom) return;
-  const dateTo = prompt('Enter end date (YYYY-MM-DD) (optional)') || dateFrom;
-  fetch('/backend_php/book.php', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ tour_id: tourId, date_from: dateFrom, date_to: dateTo, seats: 1 })
-  }).then(r=>r.json()).then(j=>{
-    if (j.success) alert('Booking successful'); else alert(j.error||'Booking failed');
-  }).catch(err=>{console.error(err); alert('Booking failed');});
-}
-
-function toggleFavorite(el, id) {
-  // If logged in, persist to server
-  if (window.currentUserId) {
-    const adding = el.textContent !== '❤️';
-    fetch('/backend_php/favorites.php', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ action: adding ? 'add' : 'remove', tour_id: parseInt(id,10) })
-    }).then(r=>r.json()).then(j=>{
-      if (j.success) el.textContent = adding ? '❤️' : '♡';
-    }).catch(err=>console.error(err));
-    return;
-  }
-
-  // fallback to localStorage for anonymous users
-=======
-    })
-    .catch(err => {
-      console.error("Error:", err);
+    .catch(error => {
+      console.error("Error fetching tours:", error);
       spinner.style.display = "none";
       resultsDiv.innerHTML = "<p>Failed to load tours.</p>";
     });
 }
 
-function toggleFavorite(el, id) {
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  if (favorites.includes(id)) {
-    favorites = favorites.filter(favId => favId !== id);
-    el.textContent = "♡";
+function bookTour(tourId) {
+  if (!window.currentUserId) {
+    alert("Please login to make a booking.");
+    return;
+  }
+
+  const dateFrom = prompt("Enter start date (YYYY-MM-DD)");
+  if (!dateFrom) return;
+  const dateTo = prompt("Enter end date (YYYY-MM-DD) (optional)") || dateFrom;
+
+  fetch("/backend_php/book.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tour_id: tourId,
+      date_from: dateFrom,
+      date_to: dateTo,
+      seats: 1
+    })
+  })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) alert("Booking successful");
+      else alert(result.error || "Booking failed");
+    })
+    .catch(error => {
+      console.error("Booking failed:", error);
+      alert("Booking failed");
+    });
+}
+
+function toggleFavorite(element, id) {
+  if (window.currentUserId) {
+    const adding = element.textContent !== "❤️";
+    fetch("/backend_php/favorites.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: adding ? "add" : "remove",
+        tour_id: parseInt(id, 10)
+      })
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) element.textContent = adding ? "❤️" : "♡";
+      })
+      .catch(error => console.error("Favorite update failed:", error));
+    return;
+  }
+
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const favoriteId = String(id);
+  const index = favorites.indexOf(favoriteId);
+  if (index >= 0) {
+    favorites.splice(index, 1);
+    element.textContent = "♡";
   } else {
-    favorites.push(id);
-    el.textContent = "❤️";
+    favorites.push(favoriteId);
+    element.textContent = "❤️";
   }
   localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
 function isFavorite(id) {
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  return favorites.includes(id);
+  return favorites.includes(String(id));
 }
-<<<<<<< HEAD
 
 function renderPagination(total) {
   if (!paginationEl) return;
-  paginationEl.innerHTML = '';
+  paginationEl.innerHTML = "";
   const totalPages = Math.ceil(total / perPage);
   if (totalPages <= 1) return;
 
-  const prev = document.createElement('button');
-  prev.textContent = 'Prev';
-  prev.disabled = currentpage <= 1;
-  prev.addEventListener('click', () => {
-    if (currentpage > 1) { currentpage -= 1; fetchFilteredTours(); }
+  const previous = document.createElement("button");
+  previous.textContent = "Prev";
+  previous.disabled = currentPage <= 1;
+  previous.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage -= 1;
+      fetchFilteredTours();
+    }
   });
-  paginationEl.appendChild(prev);
+  paginationEl.appendChild(previous);
 
-  for (let p = 1; p <= totalPages; p++) {
-    const btn = document.createElement('button');
-    btn.textContent = p;
-    if (p === currentpage) btn.classList.add('active');
-    btn.addEventListener('click', () => { currentpage = p; fetchFilteredTours(); });
-    paginationEl.appendChild(btn);
-    if (p >= 10) break;
+  for (let page = 1; page <= totalPages && page <= 10; page++) {
+    const button = document.createElement("button");
+    button.textContent = page;
+    if (page === currentPage) button.classList.add("active");
+    button.addEventListener("click", () => {
+      currentPage = page;
+      fetchFilteredTours();
+    });
+    paginationEl.appendChild(button);
   }
 
-  const next = document.createElement('button');
-  next.textContent = 'Next';
-  next.disabled = currentpage >= totalPages;
-  next.addEventListener('click', () => {
-    if (currentpage < totalPages) { currentpage += 1; fetchFilteredTours(); }
+  const next = document.createElement("button");
+  next.textContent = "Next";
+  next.disabled = currentPage >= totalPages;
+  next.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+      fetchFilteredTours();
+    }
   });
   paginationEl.appendChild(next);
 }
 
-// Load all tours by default when the page is opened (before any filters applied)
-document.addEventListener('DOMContentLoaded', () => {
-  if (resultsDiv) {
-    // Ensure filters are in their initial state then fetch
-      renderPagination(0);
-      // ensure price filter defaults to max so all tours show by default
-      const priceFilterEl = document.getElementById('priceFilter');
-      const priceValueEl = document.getElementById('priceValue');
-      if (priceFilterEl) {
-        priceFilterEl.value = priceFilterEl.max || priceFilterEl.getAttribute('max') || priceFilterEl.value;
-        if (priceValueEl) priceValueEl.textContent = priceFilterEl.value;
-      }
-      fetchFilteredTours();
+document.addEventListener("DOMContentLoaded", () => {
+  if (!resultsDiv) return;
+  if (priceFilter) {
+    priceFilter.value = priceFilter.max || priceFilter.value;
+    if (priceValue) priceValue.textContent = priceFilter.value;
   }
+  fetchFilteredTours();
 });
-=======
->>>>>>> d7a3c8a4337a60f362ea27b57881dc92f3a17f39
